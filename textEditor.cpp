@@ -12,15 +12,15 @@ typedef struct Node{
     struct Node *prev; 
  }Line;
  
- int nums(Line *text);//¼ÆËãÎÄ±¾×ÜĞĞÊı 
- Line* addLine(Line *text,string newLine);//ÎÄÄ©Ìí¼ÓĞÂĞĞ 
- Line* insertLine(Line *text,int n,string newLine);//ÔÚµÚnĞĞÇ°²åÈëĞÂĞĞ 
- Line* moveLine(Line *text,Line *preLine);//ÒÆ³ıµ±Ç°ĞĞ£¬¹â±êÒÆ¶¯µ½ÏÂÒ»ĞĞ 
- void dropLine(Line *text,int n);//É¾³ıµÚnĞĞ 
- Line* insertStr(char *preFlag,Line *preLine,string newLine);//µ±Ç°¹â±êÎ»ÖÃºó²åÈë×Ö·û´® 
- Line* deleteChar(char *preFlag,Line *preLine);//É¾³ı¹â±êÎ»ÖÃËùÔÚ×Ö·û 
- void moveChar(Line *text,int n,int m,char *preFlag,Line *preLine);//ÒÆ¶¯¹â±êµ½nĞĞmÁĞ 
- void printText(Line *text);//Êä³öÕû¸öÎÄ±¾ 
+ int nums(Line *text);//è®¡ç®—æ–‡æœ¬æ€»è¡Œæ•° 
+ Line* addLine(Line *text,string newLine);//æ–‡æœ«æ·»åŠ æ–°è¡Œ 
+ Line* insertLine(Line *text,int n,string newLine);//åœ¨ç¬¬nè¡Œå‰æ’å…¥æ–°è¡Œ 
+ Line* moveLine(Line *text,Line *preLine);//ç§»é™¤å½“å‰è¡Œï¼Œå…‰æ ‡ç§»åŠ¨åˆ°ä¸‹ä¸€è¡Œ 
+ void dropLine(Line *text,int n);//åˆ é™¤ç¬¬nè¡Œ 
+ Line* insertStr(char *preFlag,Line *preLine,string newLine);//å½“å‰å…‰æ ‡ä½ç½®åæ’å…¥å­—ç¬¦ä¸² 
+ Line* deleteChar(char *preFlag,Line *preLine);//åˆ é™¤å…‰æ ‡ä½ç½®æ‰€åœ¨å­—ç¬¦ 
+ void moveChar(Line *text,int n,int m,char *preFlag,Line *preLine);//ç§»åŠ¨å…‰æ ‡åˆ°nè¡Œmåˆ— 
+ void printText(Line *text);//è¾“å‡ºæ•´ä¸ªæ–‡æœ¬ 
 
 int nums(Line *text)
 {
@@ -43,12 +43,12 @@ Line *createText(void)
 Line *createNode(string newLine)
 {
 	Line *newNode=(Line*)malloc(sizeof(Line));
-	strcpy(newNode->line,newLine);//×Ö·û´®¸³Öµ 
-	newNode->next==NULL;
-	newNode->prev==NULL;
+	strcpy(newNode->line,newLine);//å­—ç¬¦ä¸²èµ‹å€¼ 
+	newNode->next=NULL;
+	newNode->prev=NULL;
 	return newNode; 
 }
-//±íÎ²·¨²åÈë½Úµã 
+//è¡¨å°¾æ³•æ’å…¥èŠ‚ç‚¹ 
 Line *insertNode(Line *headNode,string newLine)
 {
 	Line *newNode=createNode(newLine);
@@ -71,7 +71,7 @@ Line* serchLine(Line *headNode,int n)
 		}		
 		p=p->next; 
 	}
-	//Èç¹ûn>×ÜĞĞÊıÔò×îÖÕ»á·µ»ØÎ²½Úµã 
+	//å¦‚æœn>æ€»è¡Œæ•°åˆ™æœ€ç»ˆä¼šè¿”å›å°¾èŠ‚ç‚¹ 
 	return p;	 
 }
 Line* addLine(Line *text,string newLine)
@@ -95,10 +95,10 @@ Line* moveLine(Line *text,Line *preLine)
 	Line *p=preLine;
 	if(preLine->next==text)
 		preLine=preLine->prev;
-	else preLine=preLine->next;//ÒÆ¶¯µ½ÏÂÒ»ĞĞ 
-	p->next->prev=p->prev;//ºóÖ¸ÕëÖ¸ÏòÇ°Ö¸Õë
-	p->prev->next=p->next;//Ç°Ö¸ÕëÖ¸ÏòºóÖ¸Õë 
-	free(p);//ÊÍ·Å½ÚµãÄÚ´æ
+	else preLine=preLine->next;//ç§»åŠ¨åˆ°ä¸‹ä¸€è¡Œ 
+	p->next->prev=p->prev;//åæŒ‡é’ˆæŒ‡å‘å‰æŒ‡é’ˆ
+	p->prev->next=p->next;//å‰æŒ‡é’ˆæŒ‡å‘åæŒ‡é’ˆ 
+	free(p);//é‡Šæ”¾èŠ‚ç‚¹å†…å­˜
 	return preLine;
 }
 void dropLine(Line *text,int n)
@@ -107,9 +107,9 @@ void dropLine(Line *text,int n)
 		printf("[ECHO]:Invalid Command\n");
 		return;
 	}
-	Line *p=serchLine(text,n);//²éÕÒµÚnĞĞ 
-	(p->next)->prev=p->prev;//ºóÖ¸ÕëÖ¸ÏòÇ°Ö¸Õë
-	(p->prev)->next=p->next;//Ç°Ö¸ÕëÖ¸ÏòºóÖ¸Õë
+	Line *p=serchLine(text,n);//æŸ¥æ‰¾ç¬¬nè¡Œ 
+	(p->next)->prev=p->prev;//åæŒ‡é’ˆæŒ‡å‘å‰æŒ‡é’ˆ
+	(p->prev)->next=p->next;//å‰æŒ‡é’ˆæŒ‡å‘åæŒ‡é’ˆ
 	free(p);
 }
 
@@ -122,16 +122,16 @@ Line* insertStr(char *preFlag,Line *preLine,string newLine)
 	preLine->line[0]=preLine->line[0]+newLine[0];
 	char temp[MAXSTRLEN+1];
 	preFlag=preFlag+1;
-	strcpy(temp,preFlag);//°Ñ¹â±êºóÃæµÄÄÚÈİ
+	strcpy(temp,preFlag);//æŠŠå…‰æ ‡åé¢çš„å†…å®¹
 	memset(preFlag,0,sizeof(preFlag));
-	strcat(preLine->line,&newLine[1]);//Á¬½Ó×Ö·û´®
+	strcat(preLine->line,&newLine[1]);//è¿æ¥å­—ç¬¦ä¸²
 	strcat(preLine->line,temp);
 	preFlag=&(preLine->line[strlen(preLine->line)-1]);
 	return preLine;
 }
 Line* deleteChar(char *preFlag,Line *preLine)
 {
-	//ÀûÓÃ×Ö·ûÖ¸ÕëºÍ½Ø¶Ï·û·Ö¸î×Ö·û´®¼ÓÖ®×Ö·û´®²Ù×÷º¯Êı 
+	//åˆ©ç”¨å­—ç¬¦æŒ‡é’ˆå’Œæˆªæ–­ç¬¦åˆ†å‰²å­—ç¬¦ä¸²åŠ ä¹‹å­—ç¬¦ä¸²æ“ä½œå‡½æ•° 
 	*preFlag='\0';
 	preFlag=preFlag+1;
 	strcat(preLine->line,preFlag);
@@ -159,16 +159,16 @@ void input(string newLine)
 	int i=1;
 	while((newLine[i++]=getchar())!='\n')
 		if(i>MAXSTRLEN) break; 
-	newLine[i-1]='\0';//Ä©Î²Ìí¼Ó½Ø¶Ï·û 
-	newLine[0]=i-2;//Ê×µØÖ·´¢´æ×Ö·û´®Êµ¼Ê³¤¶È 
+	newLine[i-1]='\0';//æœ«å°¾æ·»åŠ æˆªæ–­ç¬¦ 
+	newLine[0]=i-2;//é¦–åœ°å€å‚¨å­˜å­—ç¬¦ä¸²å®é™…é•¿åº¦ 
 }
-int isEmpty(Line *text)//ÅĞ¶ÏÎÄ±¾ÊÇ·ñÎª¿Õ 
+int isEmpty(Line *text)//åˆ¤æ–­æ–‡æœ¬æ˜¯å¦ä¸ºç©º 
 {
 	if(text->next==text)
 		return 1;
 	return 0;
  } 
-void menu(Line *text)//Ö÷²Ù×÷º¯Êı
+void menu(Line *text)//ä¸»æ“ä½œå‡½æ•°
 {
 	int c=1;int op;
 	printf("Text Editor has started  ");
@@ -186,7 +186,7 @@ void menu(Line *text)//Ö÷²Ù×÷º¯Êı
 	printf("9                 Print the entire text\n\nNow enter the command below by English:\n\n");
 	string newLine;
 	Line *preLine=text->next;
-	char *preFlag=&preLine->line[1];//¹â±êÎª×Ö·ûÖ¸Õë£¬Ö¸Ïò×Ö·û 
+	char *preFlag=&preLine->line[1];//å…‰æ ‡ä¸ºå­—ç¬¦æŒ‡é’ˆï¼ŒæŒ‡å‘å­—ç¬¦ 
 	do{ 
 		printf("[INFO]:");
 		scanf("%d",&op);
@@ -226,20 +226,20 @@ void menu(Line *text)//Ö÷²Ù×÷º¯Êı
 		}
 		else if(op==6)
 		{
-			if(0==*(preFlag+1)){//¹â±êÔÚĞĞÄ©µÄÇé¿ö£¬¹â±êºóÎŞ×Ö·û(ASCII=0) 
+			if(0==*(preFlag+1)){//å…‰æ ‡åœ¨è¡Œæœ«çš„æƒ…å†µï¼Œå…‰æ ‡åæ— å­—ç¬¦(ASCII=0) 
 				if(preFlag==&(preLine->line)[1])
 					*preFlag=0;
-				else preFlag=preFlag-1;//Ç°ÒÆ 
+				else preFlag=preFlag-1;//å‰ç§» 
 			}
-			if(0==preLine->line[0]){//±¾ĞĞÎŞ×Ö·û
-				preLine=moveLine(text,preLine);//É¾³ıÕûĞĞ 
+			if(0==preLine->line[0]){//æœ¬è¡Œæ— å­—ç¬¦
+				preLine=moveLine(text,preLine);//åˆ é™¤æ•´è¡Œ 
 			} 
 			preLine=deleteChar(preFlag,preLine);
 		}
 		else if(op==7)
 		{
 			int n,m;
-			scanf("%d %d",&n,&m);//»ñÈ¡×ø±ê£¬ÒÆ¶¯¹â±ê 
+			scanf("%d %d",&n,&m);//è·å–åæ ‡ï¼Œç§»åŠ¨å…‰æ ‡ 
 			preLine=moveChar(text,abs(n),preLine);
 			if(m>preLine->line[0])
 				m=preLine->line[0];
@@ -262,7 +262,7 @@ void menu(Line *text)//Ö÷²Ù×÷º¯Êı
 			c=0;
 		}
 		else
-			printf("[WARN]:Misoperation\n");//´íÎó²Ù×÷
+			printf("[WARN]:Misoperation\n");//é”™è¯¯æ“ä½œ
 	}while(c);
  }
 void readInfo(Line *text)
@@ -271,7 +271,7 @@ void readInfo(Line *text)
 	fp=fopen(filename,"r");
 	if(NULL==fp){
 		fp=fopen(filename,"w+");
-		return;//ÎÄ¼ş²»´æÔÚ£¬´´½¨ºó·µ»Ø 
+		return;//æ–‡ä»¶ä¸å­˜åœ¨ï¼Œåˆ›å»ºåè¿”å› 
 	}
 	int i=0;
 	while((ch=fgetc(fp))!=EOF)
